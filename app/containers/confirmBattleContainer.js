@@ -18,9 +18,14 @@ var ConfirmBattleContainer = React.createClass({
   },
   componentDidMount: function () {
     var query = this.props.location.query;
-    githubHelpers.getPlayersInfo([query.playerOne, query.playerTwo]);
-
-    console.log('componentDidMount');
+    //https://egghead.io/playlists/the-this-key-word-250c37d9 a free tutorial on this keyword
+    githubHelpers.getPlayersInfo([query.playerOne, query.playerTwo])
+      .then(function (players){
+        this.setState({
+          isLoading: false,
+          playersInfo: [players[0], players[1]]
+        })
+      }.bind(this))
   },
   componentWillReceiveProps: function () {
     console.log("componentWillReceiveProps")
